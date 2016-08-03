@@ -52,3 +52,6 @@ Think about operational use cases from the real world. Few examples:
 1. Can you run the playbook multiple times without any problem?
 1. What happens if a service crashes?
 1. How much effort will it take to create a new service?
+
+# orig source:
+# https://github.com/sysboss/devops-exercise.git
