@@ -1,4 +1,36 @@
 ---
+- name: Add snake repo signing key
+  hosts: all
+  become: yes
+  pre_tasks:
+      - apt_key: 
+          id: F06FC659
+          url: http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0x8cf63ad3f06fc659
+          state: present
+
+- name: Add snake repository
+  hosts: all
+  become: yes
+  pre_tasks:
+      - apt_repository: 
+          repo: 'ppa:jonathonf/python-2.7'
+
+- name: update_cache
+  hosts: all
+  sudo: yes
+  pre_tasks:
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist
+
+- name: upgrade packages
+  hosts: all
+  sudo: yes
+  pre_tasks:
+    - name: Run the equivalent of "apt-get update" as a separate step
+      apt:
+        update_cache: yes
+
 - name: Common tasks FTW
   hosts: all
   sudo: yes
