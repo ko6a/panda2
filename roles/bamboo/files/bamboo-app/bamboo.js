@@ -4,8 +4,10 @@
 
 var http       = require('http'),
     config     = require('./config.json'),
-    dispatcher = require('httpdispatcher'),
     redis      = require("redis").createClient();
+
+var HttpDispatcher = require('httpdispatcher');
+var dispatcher     = new HttpDispatcher();
 
 // connect to Redis
 redis.on('connect', function() {
