@@ -1,0 +1,13 @@
+---
+- name: copy big-service app
+  copy: src=big-service-app dest=/tmp/ owner=root group=root mode=755
+
+- name: copy init script
+  copy: src=init dest=/etc/init.d/big-service-app group=root mode=755
+
+- name: Start big-service-App
+  service: name=big-service-app state=started
+
+- name: Enable big-service-App
+  service: name=big-service-app enabled=yes
+

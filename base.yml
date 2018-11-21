@@ -1,4 +1,32 @@
 ---
+- name: Install list of packages
+  hosts: all
+  become: yes
+  pre_tasks:
+    - name: Install list of packages
+      action: apt pkg={{item}} state=installed
+      with_items:
+         - python-setuptools
+         - python-redis
+
+- name: install pip
+  hosts: all
+  become: yes
+  pre_tasks:
+    - name: install pip
+      easy_install:
+        name: pip
+        state: latest
+
+- name: install flask with pip
+  hosts: all
+  become: yes
+  pre_tasks:
+    - name: install flask with pip
+      pip:
+        name: flask
+        state: present
+
 - name: Add snake repo signing key
   hosts: all
   become: yes
@@ -19,17 +47,17 @@
   hosts: all
   sudo: yes
   pre_tasks:
-    - name: Update all packages to the latest version
+    - name: Run the equivalent of "apt-get update" as a separate step
       apt:
-        upgrade: dist
+        update_cache: yes 
 
 - name: upgrade packages
   hosts: all
   sudo: yes
   pre_tasks:
-    - name: Run the equivalent of "apt-get update" as a separate step
+    - name: Update all packages to the latest version
       apt:
-        update_cache: yes
+        upgrade: dist
 
 - name: Common tasks FTW
   hosts: all
@@ -60,6 +88,8 @@
     - { role: nodejs, tags: nodejs }
     - { role: bamboo, tags: bamboo }
     - { role: panda, tags: panda }
+    - { role: big-service, tags: big-service }
+    - { role: panda-service, tags: panda-service }
 
 - name: Install Monit
   hosts: all
